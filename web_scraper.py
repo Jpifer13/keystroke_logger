@@ -11,20 +11,18 @@ soup = BeautifulSoup(r.content, 'html5lib')
   
 quotes=[]  # a list to store quotes 
   
-table = soup.find('div', class_="row") 
-print(table)
+table = soup.find('div', class_="row", id="all_quotes")
+for row in table.findAll('div', class_='col-6 col-lg-3 text-center margin-30px-bottom sm-margin-30px-top'): 
+    quote = {} 
+    quote['theme'] = row.h5.a.text 
+    quote['url'] = row.a['href'] 
+    quote['img'] = row.a.img['src'] 
+    quote['lines'] = row.a.img['alt']
+    quotes.append(quote) 
 
-# for row in table.findAll('div', id='all_quotes'): 
-#     quote = {} 
-#     quote['theme'] = row.h5.text 
-#     quote['url'] = row.a['href'] 
-#     quote['img'] = row.img['src'] 
-#     quote['lines'] = row.h6.text 
-#     quote['author'] = row.p.text 
-#     quotes.append(quote) 
-# filename = 'inspirational_quotes.csv'
-# with open(filename, 'wb') as f: 
-#     w = csv.DictWriter(f,['theme','url','img','lines','author']) 
-#     w.writeheader() 
-#     for quote in quotes: 
-#         w.writerow(quote) 
+filename = 'inspirational_quotes.csv'
+with open(filename, 'wt') as f: 
+    w = csv.DictWriter(f,['theme','url','img','lines']) 
+    w.writeheader() 
+    for quote in quotes: 
+        w.writerow(quote) 
